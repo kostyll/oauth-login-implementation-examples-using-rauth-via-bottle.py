@@ -62,6 +62,8 @@ def login_success():
         )
     )
     session_json = session.get('me').json()
+    # For non-Ascii characters to work properly!
+    session_json = dict((k, unicode(v).encode('utf-8')) for k, v in session_json.iteritems())
     # For complete list of keys,
     # go to: https://developers.facebook.com/docs/reference/api/user/
     return 'Welcome {name}!'.format(**session_json)

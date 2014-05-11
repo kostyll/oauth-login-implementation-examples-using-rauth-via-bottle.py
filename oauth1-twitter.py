@@ -66,6 +66,8 @@ def login_success():
 
     json_path = 'account/verify_credentials.json'
     session_json = session.get(json_path, params=params, verify=True).json()
+    # For non-Ascii characters to work properly!
+    session_json = dict((k, unicode(v).encode('utf-8')) for k, v in session_json.iteritems())
     # For complete list of json_path,
     # go to: https://dev.twitter.com/docs/api/1.1
     return 'Welcome {name}!'.format(**session_json)
