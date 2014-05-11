@@ -75,6 +75,8 @@ def login_success():
     )
     json_path = 'https://www.googleapis.com/oauth2/v1/userinfo'
     session_json = session.get(json_path).json()
+    # For non-Ascii characters to work properly!
+    session_json = dict((k, unicode(v).encode('utf-8')) for k, v in session_json.iteritems())
     return 'Welcome {name}!'.format(**session_json)
     # Unfortunately, there seem to be no reference for complete list of keys,
     # but here are the complete json keys returned by the scope: email profile:
